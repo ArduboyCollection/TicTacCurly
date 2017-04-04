@@ -1,11 +1,13 @@
 # TicTacCurly 
- VERSION 1.1
+ VERSION 1.5
 tic tac toe game for arduboy 1-2 player
 
 from title screen press a for player select
 
-on player select to keep the default 1 player press b
- or press left to change to two player then b to confirm and play
+on player select to keep the default 1 player press up or down to change
+then b to confirm and play
+ 
+ if playing 1 player you go to a difficulty select screen up or down to select
  
 in the game play screen, player X goes first (in 1 player game, you are X)
 up down left and right moves the cursor, and a places your X or O
@@ -17,8 +19,9 @@ X WIN and O WIN are counted as are TIES
 
 if x wins o goes first in the next round, and if o wins x goes first next.
 
-its a simple game, the ai is as minimal as possible but enjoy
+EASY enemy will win if he can or place his "o" somewhere open at random
+MEDIUM enemy will win if he can, if he cant win but can block your win he will do that. else he will move at random
+HARD isnt done yet so it SHOULD do the same as medium
 
-UPDATE fixed a few bugs enemy now no longer takes 2 or more turns in single player mode
-       also added press b to reset board in single player only
-       made a few thingd run a bit more smoothly, added the proper title screen
+
+enjoy, if you see any problems i missed, message me on Arduboy forums
