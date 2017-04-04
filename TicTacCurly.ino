@@ -179,7 +179,7 @@ const unsigned char titles[] PROGMEM  = {
 
 void setup() {
   ab.begin();
-  ab.setFrameRate(3);
+  ab.setFrameRate(1);
   ab.initRandomSeed();
   ab.clear(); 
   Serial.begin(9600);
