@@ -1,5 +1,5 @@
 # TicTacCurly 
- VERSION 1.5
+ VERSION 1.6
 tic tac toe game for arduboy 1-2 player
 
 from title screen press a for player select
