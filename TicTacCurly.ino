@@ -24,7 +24,7 @@ int xwins = 0;
 int owins = 0;
 int ties = 0;
 int emove = 0;
-
+int WhoKnew = 0;
 void VooDoo() {
    emove = random(1, 10) ;
   
@@ -81,7 +81,7 @@ void VooDoo() {
      turn += 1;
      c3 = 2; 
      
-  }
+  } else { emove = random(1, 10) ; }
 }
 
 void WinIfCan() { if ((a1 == 2) && (a2 == 2) && (a3 == 0)) { a3 = 2; turn += 1; } else if ((a1 == 2) && (a3 == 2) && (a2 == 0)) {  a2 = 2; turn += 1; } else if ((a2 == 2) && (a3 == 2) && (a1 == 0)) {  a1 = 2; turn += 1; } else if ((b1 == 2) && (b2 == 2) && (b3 == 0)) {  b3 = 2; turn += 1; } else if ((b1 == 2) && (b3 == 2) && (b2 == 0)) {  b2 = 2; turn += 1; } else if ((b2 == 2) && (b3 == 2) && (b1 == 0)) {  b1 = 2; turn += 1; } else if ((c1 == 2) && (c2 == 2) && (c3 == 0)) {  c3 = 2; turn += 1; } else if ((c1 == 2) && (c3 == 2) && (c2 == 0)) {  c2 = 2; turn += 1; } else if ((c2 == 2) && (c3 == 2) && (c1 == 0)) {  c1 = 2; turn += 1; } else if ((a1 == 2) && (b1 == 2) && (c1 == 0)) {  c1 = 2; turn += 1; } else if ((c1 == 2) && (b1 == 2) && (a1 == 0)) {  a1 = 2; turn += 1; } else if ((a1 == 2) && (c1 == 2) && (b1 == 0)) {  b1 = 2; turn += 1; } else if ((a2 == 2) && (b2 == 2) && (c2 == 0)) {  c2 = 2; turn += 1; } else if ((c2 == 2) && (b2 == 2) && (a2 == 0)) {  a2 = 2; turn += 1; } else if ((a2 == 2) && (c2 == 2) && (b2 == 0)) {  b2 = 2; turn += 1; } else if ((a3 == 2) && (b3 == 2) && (c3 == 0)) {  c3 = 2; turn += 1; } else if ((c3 == 2) && (b3 == 2) && (a3 == 0)) {  a3 = 2; turn += 1; } else if ((a3 == 2) && (c3 == 2) && (b3 == 0)) {  b3 = 2; turn += 1; } else if ((a3 == 2) && (b2 == 2) && (c1 == 0)) {  c1 = 2; turn += 1; } else if ((c1 == 2) && (b2 == 2) && (a3 == 0)) {  a3 = 2; turn += 1; } else if ((a3 == 2) && (c1 == 2) && (b2 == 0)) {  b2 = 2; turn += 1; } else if ((a1 == 2) && (b2 == 2) && (c3 == 0)) {  c3 = 2; turn += 1; } else if ((c3 == 2) && (b2 == 2) && (a1 == 0)) {  a1 = 2; turn += 1; } else if ((a1 == 2) && (c3 == 2) && (b2 == 0)) {  b2 = 2; turn += 1; } else if (dif >= 1) { BlockIfCan(); } else if (dif == 0) { VooDoo(); } }
@@ -165,11 +165,44 @@ void BlockIfCan() {
    else if ((a1 == 1) && (c3 == 1) && (b2 == 0)) { //if can win win
     b2 = 2; turn += 1;
    }
-   else {
+   else if (dif >= 2) {
+    DiE();
+   }
+   else if (dif == 1) {
     VooDoo();
    }
 }
-
+void DiE() {
+  
+  if (turn == 2) { 
+    WhoKnew = random(1,5);
+    if ((WhoKnew == 1) && (a1 == 0)) {
+      a1 = 2;
+      turn +=1;
+    }
+    else if ((WhoKnew == 2) && (a3 == 0)) {
+      a3 = 2;
+      turn +=1;
+    }
+    else if ((WhoKnew == 3) && (c1 == 0)) {
+      c1 = 2;
+      turn +=1;
+    }
+    else if ((WhoKnew == 4) && (c3 == 0)) {
+      c3 = 2;
+      turn +=1;
+    }
+    else { WhoKnew = random(1,5); } 
+  } //close if 4 corners open
+    
+  // here we go!
+  
+  // eturn2
+  else  {
+    VooDoo();
+   }
+  
+}
 const unsigned char player[] PROGMEM  = {
 0x3, 0x1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1, 0x3, 0xc, 0x8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8, 0xc,   
 };
@@ -194,7 +227,7 @@ void loop() {
   if (gamestate == 0) {
        ab.drawBitmap((0), (0), titles, 128, 54, WHITE);
        ab.setCursor((0), (55)); 
-      ab.print("VERSION 1.5 PRESS A");
+      ab.print("VERSION 1.6 PRESS A");
       if (ab.pressed(A_BUTTON)) {
         ab.clear();
         gamestate += 1;
@@ -213,6 +246,8 @@ void loop() {
           ab.print("1 Player");
           ab.setCursor((50), (42)); 
           ab.print("2 Players");
+          ab.setCursor((40), (57)); 
+          ab.print("PRESS B");
           if (players == 0) { ab.setCursor((32), (22)); ab.print("X"); }
           else if (players == 1) { ab.setCursor((32), (42)); ab.print("X"); } 
          
@@ -232,6 +267,8 @@ void loop() {
           ab.print("MEDIUM");
           ab.setCursor((50), (42)); 
           ab.print("HARD");
+          ab.setCursor((40), (57)); 
+          ab.print("PRESS A");
           if (dif == 0)      { ab.setCursor((32), (2)); ab.print("X"); }
           else if (dif == 1) { ab.setCursor((32), (22)); ab.print("X"); } 
           else if (dif == 2) { ab.setCursor((32), (42)); ab.print("X"); } 
@@ -275,6 +312,16 @@ void loop() {
   ab.print(ties);
   ab.setCursor((70), (40));
   ab.print("Turn");
+  ab.setCursor((70), (50));
+  if (dif == 0) {
+    ab.print("EASY");
+  }
+  else if (dif == 1) {
+    ab.print("MEDIUM");
+  }
+  else if (dif == 2) {
+    ab.print("HARD");
+  }
   ab.setCursor((110), (40)); 
   if (turn == 1) {
   ab.print("X");
